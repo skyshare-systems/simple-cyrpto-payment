@@ -12,6 +12,7 @@ contract SampleToken is Ownable, ERC20("SampleToken", "ST") {
    }
 
    function mintToken(uint256 _quantity) external onlyOwner {
+      require((totalSupply() + _quantity) <= MAX_SUPPLY, "Beyond max supply");
       _mint(msg.sender, _quantity);
    }
 }
