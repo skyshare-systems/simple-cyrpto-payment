@@ -43,12 +43,18 @@ contract PaymentContract is Ownable {
     * Withdraw functions
     */
 
-   function withdraw(address _token, uint256 _amount) external onlyOwner {
+   function withdraw(address _token) external onlyOwner {
       IERC20 token = IERC20(_token);
-      token.transfer(msg.sender, _amount);
+      token.transfer(msg.sender, token.balanceOf(address(this)));
    }
 
    function withdrawNative() external onlyOwner {
       payable(msg.sender).transfer(address(this).balance);
    }
+
+   /**
+    * Receive
+    */
+
+   receive() external payable{}
 }
