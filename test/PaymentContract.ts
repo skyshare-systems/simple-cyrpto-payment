@@ -112,5 +112,12 @@ describe("Payment Contract", function () {
 
       expect(await paymentContract.withdraw(sampleToken.address));
     });
+
+    it("Should allow owner to withdraw native balance", async () => {
+      const { paymentContract } = await loadFixture(deployContract);
+
+      await paymentContract.payNative({ value: ethers.utils.parseEther("10") });
+      expect(await paymentContract.withdrawNative());
+    });
   });
 });
